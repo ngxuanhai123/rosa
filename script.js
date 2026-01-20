@@ -20,7 +20,7 @@ const RESOURCES = {
     },
     en: {
         joyful: "Joyful Mysteries - Vui.m4a",
-        sorrowful: "Bí ẩn buồn bã - Thương.m4a",
+        sorrowful: "Sorrowful Mysteries - Thương.m4a",
         glorious: "Glorious Mysteries - Mừng.m4a",
         luminous: "Luminous Mysteries - Sáng.m4a",
         labels: {
@@ -33,10 +33,10 @@ const RESOURCES = {
         }
     },
     id: {
-        joyful: "joyful-id.mp3",
-        sorrowful: "sorrowful-id.mp3",
-        glorious: "glorious-id.mp3",
-        luminous: "luminous-id.mp3",
+        joyful: "DOA ROSARIO Peristiwa Gembira ( Hari Senin & Sabtu ).m4a",
+        sorrowful: "DOA ROSARIO Peristiwa Sedih ( Hari Selasa & Jumat ).m4a",
+        glorious: "DOA ROSARIO Peristiwa Mulia ( Hari Rabu & Minggu ).m4a",
+        luminous: "DOA ROSARIO Peristiwa Terang ( Hari Kamis ).m4a",
         labels: {
             joyful: "Peristiwa Gembira",
             sorrowful: "Peristiwa Sedih",
