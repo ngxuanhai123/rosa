@@ -3,38 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kinh Mân Côi Mỗi Ngày</title>
+    <title>Daily Holy Rosary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="container">
-        <div class="language-selector">
-            <button onclick="changeLanguage('vi')" id="btn-vi" class="lang-btn active">🇻🇳 Tiếng Việt</button>
-            <button onclick="changeLanguage('en')" id="btn-en" class="lang-btn">🇺🇸 English</button>
-            <button onclick="changeLanguage('id')" id="btn-id" class="lang-btn">🇮🇩 Indonesia</button>
-        </div>
+    <div class="main-wrapper">
+        <div class="cross-icon">☩</div>
 
-        <div class="card">
-            <h3 id="date-display">Hôm nay, Thứ ...</h3>
-            
-            <div class="image-container" id="mystery-image">
-                <div class="placeholder-icon">✝️</div>
+        <div class="prayer-card">
+            <div class="card-header">
+                <p id="date-display">Đang tải ngày...</p>
+                <div class="divider">
+                    <span>⚜</span> </div>
             </div>
 
-            <h1 id="mystery-name">Đang tải...</h1>
-            <p id="sub-text">Mời bạn cùng hiệp ý cầu nguyện.</p>
+            <div class="lang-tabs">
+                <button onclick="changeLanguage('vi')" id="btn-vi" class="lang-tab active">Tiếng Việt</button>
+                <button onclick="changeLanguage('en')" id="btn-en" class="lang-tab">English</button>
+                <button onclick="changeLanguage('id')" id="btn-id" class="lang-tab">Indonesia</button>
+            </div>
 
-            <audio id="audio-player" controls controlsList="nodownload">
-                <source src="" type="audio/mpeg">
-                Trình duyệt của bạn không hỗ trợ phát nhạc.
-            </audio>
+            <div class="mystery-window">
+                <img id="mystery-img" src="https://images.unsplash.com/photo-1518175739343-45579f1c7d2c?q=80&w=600&auto=format&fit=crop" alt="Holy Rosary">
+                <div class="overlay"></div>
+            </div>
+
+            <div class="mystery-content">
+                <h1 id="mystery-name">Đang tải...</h1>
+                <p id="sub-text">Mân Côi - Lời kinh của hòa bình</p>
+            </div>
+
+            <div class="audio-wrapper">
+                <audio id="audio-player" controls controlsList="nodownload">
+                    <source src="" type="audio/mp4"> Trình duyệt không hỗ trợ.
+                </audio>
+            </div>
         </div>
 
         <footer>
-            <p>Daily Rosary &copy; 2026</p>
-        </footer>
+            <p>Ad Majorem Dei Gloriam</p> </footer>
     </div>
 
     <script src="script.js"></script>
