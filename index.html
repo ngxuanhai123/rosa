@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kinh Mân Côi Mỗi Ngày</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <div class="language-selector">
+            <button onclick="changeLanguage('vi')" id="btn-vi" class="lang-btn active">🇻🇳 Tiếng Việt</button>
+            <button onclick="changeLanguage('en')" id="btn-en" class="lang-btn">🇺🇸 English</button>
+            <button onclick="changeLanguage('id')" id="btn-id" class="lang-btn">🇮🇩 Indonesia</button>
+        </div>
+
+        <div class="card">
+            <h3 id="date-display">Hôm nay, Thứ ...</h3>
+            
+            <div class="image-container" id="mystery-image">
+                <div class="placeholder-icon">✝️</div>
+            </div>
+
+            <h1 id="mystery-name">Đang tải...</h1>
+            <p id="sub-text">Mời bạn cùng hiệp ý cầu nguyện.</p>
+
+            <audio id="audio-player" controls controlsList="nodownload">
+                <source src="" type="audio/mpeg">
+                Trình duyệt của bạn không hỗ trợ phát nhạc.
+            </audio>
+        </div>
+
+        <footer>
+            <p>Daily Rosary &copy; 2026</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
