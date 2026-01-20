@@ -1,89 +1,155 @@
 :root {
-    --primary-color: #2c3e50;
-    --accent-color: #3498db;
-    --bg-color: #f4f6f7;
-    --card-bg: #ffffff;
+    --primary-blue: #1E3A8A; /* Xanh Đức Mẹ đậm */
+    --accent-gold: #D4AF37;   /* Vàng kim loại */
+    --bg-dark: #0f172a;       /* Nền tối */
+    --card-bg: #fffbf0;       /* Màu giấy cũ nhẹ */
+    --text-dark: #2c3e50;
+    --text-light: #64748b;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: var(--bg-color);
+    font-family: 'Lato', sans-serif;
+    background: radial-gradient(circle at center, #2c3e50 0%, #000000 100%);
     margin: 0;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    color: var(--primary-color);
+    color: var(--text-dark);
 }
 
-.container {
+.main-wrapper {
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
     padding: 20px;
     text-align: center;
 }
 
-.language-selector {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+.cross-icon {
+    color: var(--accent-gold);
+    font-size: 2rem;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
 }
 
-.lang-btn {
-    border: none;
-    background: #e0e0e0;
-    padding: 8px 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: 0.3s;
+/* Thẻ Cầu Nguyện (Prayer Card) */
+.prayer-card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    border: 2px solid var(--accent-gold); /* Viền vàng */
+    padding: 25px 20px;
+    position: relative;
+    overflow: hidden;
 }
 
-.lang-btn.active {
-    background-color: var(--accent-color);
-    color: white;
-    font-weight: bold;
+/* Trang trí góc */
+.prayer-card::before, .prayer-card::after {
+    content: "✥";
+    position: absolute;
+    color: rgba(212, 175, 55, 0.2);
+    font-size: 1.5rem;
+}
+.prayer-card::before { top: 10px; left: 10px; }
+.prayer-card::after { bottom: 10px; right: 10px; }
+
+.card-header #date-display {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--primary-blue);
+    font-size: 1.1rem;
+    margin: 0;
 }
 
-.card {
-    background: var(--card-bg);
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-
-#date-display {
-    font-weight: 300;
-    color: #7f8c8d;
-    margin-top: 0;
-}
-
-.image-container {
-    width: 100px;
-    height: 100px;
-    background-color: #ecf0f1;
-    border-radius: 50%;
-    margin: 20px auto;
+.divider {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
+    margin: 15px 0;
+}
+.divider span {
+    color: var(--accent-gold);
+    font-size: 1.2rem;
+    padding: 0 10px;
+}
+.divider::before, .divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
-#mystery-name {
-    margin: 10px 0;
-    font-size: 1.5rem;
+/* Tabs chọn ngôn ngữ */
+.lang-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 20px;
+    background: rgba(0,0,0,0.05);
+    padding: 5px;
+    border-radius: 25px;
 }
 
-#audio-player {
+.lang-tab {
+    background: transparent;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.lang-tab.active {
+    background-color: var(--primary-blue);
+    color: white;
+    box-shadow: 0 4px 6px rgba(30, 58, 138, 0.2);
+}
+
+/* Khung ảnh vòm cửa sổ nhà thờ */
+.mystery-window {
     width: 100%;
-    margin-top: 20px;
-    outline: none;
+    height: 200px;
+    border-radius: 100px 100px 12px 12px; /* Dạng vòm */
+    overflow: hidden;
+    position: relative;
+    border: 4px solid #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+#mystery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mystery-content h1 {
+    font-family: 'Playfair Display', serif;
+    color: var(--primary-blue);
+    font-size: 1.8rem;
+    margin: 10px 0 5px 0;
+    line-height: 1.2;
+}
+
+.mystery-content p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 25px;
+}
+
+/* Audio Player tùy chỉnh nhẹ */
+.audio-wrapper audio {
+    width: 100%;
+    height: 40px;
+    border-radius: 20px;
 }
 
 footer {
-    margin-top: 30px;
-    font-size: 0.8rem;
-    color: #bdc3c7;
+    margin-top: 25px;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.75rem;
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
 }
