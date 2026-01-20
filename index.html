@@ -2,226 +2,304 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Daily Holy Rosary</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-blue: #1E3A8A; /* Xanh Đức Mẹ đậm */
-            --accent-gold: #D4AF37;   /* Vàng kim loại */
-            --bg-dark: #0f172a;       /* Nền tối */
-            --card-bg: #fffbf0;       /* Màu giấy cũ nhẹ */
-            --text-dark: #2c3e50;
-            --text-light: #64748b;
+            --primary-color: #0f172a;       /* Xanh đêm thẳm */
+            --accent-gold: #fbbf24;         /* Vàng thánh */
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --card-bg: rgba(20, 30, 48, 0.85); /* Nền thẻ tối màu mờ */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
         }
 
         body {
-            font-family: 'Lato', sans-serif;
-            background: radial-gradient(circle at center, #2c3e50 0%, #000000 100%);
+            font-family: 'Inter', sans-serif;
+            background: 
+                linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9)),
+                url('https://images.unsplash.com/photo-1437603568260-1950d3ca6eab?q=80&w=1920&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             margin: 0;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: var(--text-dark);
+            color: var(--text-main);
+            overflow: hidden; /* Tránh scroll thừa */
         }
 
-        .main-wrapper {
+        .main-container {
             width: 100%;
-            max-width: 420px;
+            max-width: 400px;
             padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hiệu ứng kính mờ cho thẻ chính */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             text-align: center;
-        }
-
-        .cross-icon {
-            color: var(--accent-gold);
-            font-size: 2rem;
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-        }
-
-        /* Thẻ Cầu Nguyện (Prayer Card) */
-        .prayer-card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            border: 2px solid var(--accent-gold); /* Viền vàng */
-            padding: 25px 20px;
             position: relative;
             overflow: hidden;
+            animation: fadeInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        /* Trang trí góc */
-        .prayer-card::before, .prayer-card::after {
-            content: "✥";
+        /* Họa tiết trang trí mờ */
+        .glass-card::before {
+            content: "†";
             position: absolute;
-            color: rgba(212, 175, 55, 0.2);
-            font-size: 1.5rem;
-        }
-        .prayer-card::before { top: 10px; left: 10px; }
-        .prayer-card::after { bottom: 10px; right: 10px; }
-
-        .card-header #date-display {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            color: var(--primary-blue);
-            font-size: 1.1rem;
-            margin: 0;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 15rem;
+            color: rgba(255, 255, 255, 0.03);
+            font-family: 'Cinzel', serif;
+            pointer-events: none;
         }
 
-        .divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 15px 0;
-        }
-        .divider span {
+        .header-icon {
+            font-size: 2rem;
             color: var(--accent-gold);
-            font-size: 1.2rem;
-            padding: 0 10px;
-        }
-        .divider::before, .divider::after {
-            content: "";
-            flex: 1;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
         }
 
-        /* Tabs chọn ngôn ngữ */
-        .lang-tabs {
+        .date-text {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        /* Language Selector hiện đại */
+        .lang-group {
             display: flex;
             justify-content: center;
-            gap: 5px;
-            margin-bottom: 20px;
-            background: rgba(0,0,0,0.05);
-            padding: 5px;
-            border-radius: 25px;
+            gap: 8px;
+            margin-bottom: 25px;
+            background: rgba(0,0,0,0.2);
+            padding: 4px;
+            border-radius: 12px;
+            display: inline-flex;
         }
 
-        .lang-tab {
+        .lang-btn {
             background: transparent;
             border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-family: 'Lato', sans-serif;
-            font-size: 0.85rem;
-            color: var(--text-light);
+            padding: 8px 12px;
+            border-radius: 8px;
+            color: var(--text-muted);
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 1.2rem; /* Size cờ */
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .lang-btn span {
+            font-size: 0.8rem;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
         }
 
-        .lang-tab.active {
-            background-color: var(--primary-blue);
-            color: white;
-            box-shadow: 0 4px 6px rgba(30, 58, 138, 0.2);
+        .lang-btn.active {
+            background: rgba(255,255,255,0.1);
+            color: var(--text-main);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
-        /* Khung ảnh vòm cửa sổ nhà thờ */
-        .mystery-window {
+        .lang-btn:hover:not(.active) {
+            color: var(--text-main);
+        }
+
+        /* Hình ảnh mầu nhiệm */
+        .mystery-visual {
             width: 100%;
-            height: 200px;
-            border-radius: 100px 100px 12px 12px; /* Dạng vòm */
+            height: 220px;
+            border-radius: 16px;
             overflow: hidden;
+            margin-bottom: 24px;
+            border: 1px solid var(--glass-border);
             position: relative;
-            border: 4px solid #fff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
         }
 
-        #mystery-img {
+        .mystery-visual img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 5s ease;
+        }
+        
+        /* Hiệu ứng zoom nhẹ ảnh */
+        .glass-card:hover .mystery-visual img {
+            transform: scale(1.05);
         }
 
-        .mystery-content h1 {
-            font-family: 'Playfair Display', serif;
-            color: var(--primary-blue);
-            font-size: 1.8rem;
-            margin: 10px 0 5px 0;
-            line-height: 1.2;
+        .mystery-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0 0 5px 0;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .mystery-content p {
+        .mystery-subtitle {
             font-size: 0.9rem;
-            color: var(--text-light);
-            margin-bottom: 25px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-weight: 300;
         }
 
-        /* Audio Player tùy chỉnh nhẹ */
-        .audio-wrapper audio {
+        /* Audio Player Custom */
+        audio {
             width: 100%;
-            height: 40px;
-            border-radius: 20px;
+            height: 45px;
+            border-radius: 10px;
+            filter: invert(1) hue-rotate(180deg); /* Đảo màu để hợp nền tối */
+            opacity: 0.8;
+            outline: none;
         }
 
-        footer {
-            margin-top: 25px;
-            color: rgba(255,255,255,0.4);
-            font-size: 0.75rem;
-            font-style: italic;
-            font-family: 'Playfair Display', serif;
+        .footer-text {
+            margin-top: 30px;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.2);
+            font-family: 'Cinzel', serif;
+            letter-spacing: 1px;
         }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Overlay "Tap to Start" nếu Autoplay bị chặn */
+        #start-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+            display: none; /* Mặc định ẩn, JS sẽ hiện nếu cần */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .play-btn-big {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+            animation: pulse 2s infinite;
+        }
+        
+        .play-btn-big::after {
+            content: "▶";
+            color: #000;
+            font-size: 30px;
+            margin-left: 5px;
+        }
+        
+        .overlay-text {
+            margin-top: 20px;
+            color: white;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 1px;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 20px rgba(251, 191, 36, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="main-wrapper">
-        <div class="cross-icon">☩</div>
+    <div id="start-overlay" onclick="unlockAudio()">
+        <div class="play-btn-big"></div>
+        <div class="overlay-text">Chạm để bắt đầu cầu nguyện</div>
+    </div>
 
-        <div class="prayer-card">
-            <div class="card-header">
-                <p id="date-display">Đang tải ngày...</p>
-                <div class="divider">
-                    <span>⚜</span> </div>
+    <div class="main-container">
+        <div class="glass-card">
+            <div class="header-icon">☩</div>
+            <div class="date-text" id="date-display">LOADING DATE...</div>
+
+            <div class="lang-group">
+                <button onclick="changeLanguage('vi')" id="btn-vi" class="lang-btn active">
+                    🇻🇳 <span>Việt</span>
+                </button>
+                <button onclick="changeLanguage('en')" id="btn-en" class="lang-btn">
+                    🇺🇸 <span>Eng</span>
+                </button>
+                <button onclick="changeLanguage('id')" id="btn-id" class="lang-btn">
+                    🇮🇩 <span>Indo</span>
+                </button>
             </div>
 
-            <div class="lang-tabs">
-                <button onclick="changeLanguage('vi')" id="btn-vi" class="lang-tab active">Tiếng Việt</button>
-                <button onclick="changeLanguage('en')" id="btn-en" class="lang-tab">English</button>
-                <button onclick="changeLanguage('id')" id="btn-id" class="lang-tab">Indonesia</button>
-            </div>
-
-            <div class="mystery-window">
+            <div class="mystery-visual">
                 <img id="mystery-img" src="https://images.unsplash.com/photo-1518175739343-45579f1c7d2c?q=80&w=600&auto=format&fit=crop" alt="Holy Rosary">
-                <div class="overlay"></div>
             </div>
 
-            <div class="mystery-content">
-                <h1 id="mystery-name">Đang tải...</h1>
-                <p id="sub-text">Mân Côi - Lời kinh của hòa bình</p>
-            </div>
+            <h1 class="mystery-title" id="mystery-name">...</h1>
+            <p class="mystery-subtitle" id="sub-text">...</p>
 
-            <div class="audio-wrapper">
-                <audio id="audio-player" controls controlsList="nodownload">
-                    <source src="" type="audio/mp4"> Trình duyệt không hỗ trợ.
+            <div class="audio-container">
+                <audio id="audio-player" controls controlsList="nodownload" autoplay playsinline>
+                    <source src="" type="audio/mp4">
+                    Your browser does not support the audio element.
                 </audio>
             </div>
-        </div>
 
-        <footer>
-            <p>Ad Majorem Dei Gloriam</p> </footer>
+            <div class="footer-text">AD MAJOREM DEI GLORIAM</div>
+        </div>
     </div>
 
     <script>
-        // --- CẤU HÌNH ---
-        // 1. Thay đổi đường dẫn này bằng Public URL Bucket R2 của bạn
+        // --- CONFIGURATION ---
         const R2_BASE_URL = "https://pub-68349844dd6d4ec5a3103816b64fec7a.r2.dev"; 
 
-        // 2. Tên file nhạc bạn đã upload lên R2 (Ví dụ: vui-vi.mp3, joyful-en.mp3...)
         const RESOURCES = {
             vi: {
-                joyful: "vui-vi.mp3",       // Năm sự Vui
-                sorrowful: "thuong-vi.mp3", // Năm sự Thương
-                glorious: "mung-vi.mp3",    // Năm sự Mừng
-                luminous: "sang-vi.mp3",    // Năm sự Sáng
+                joyful: "vui-vi.mp3",
+                sorrowful: "thuong-vi.mp3",
+                glorious: "mung-vi.mp3",
+                luminous: "sang-vi.mp3",
                 labels: {
                     joyful: "Năm Sự Vui",
                     sorrowful: "Năm Sự Thương",
                     glorious: "Năm Sự Mừng",
                     luminous: "Năm Sự Sáng",
-                    loading: "Đang tải...",
-                    sub: "Kinh Mân Côi trọn bộ"
-                }
+                    sub: "Kinh Mân Côi Trọn Bộ"
+                },
+                overlayText: "Chạm để bắt đầu cầu nguyện"
             },
             en: {
                 joyful: "Joyful Mysteries - Vui.m4a",
@@ -233,9 +311,9 @@
                     sorrowful: "Sorrowful Mysteries",
                     glorious: "Glorious Mysteries",
                     luminous: "Luminous Mysteries",
-                    loading: "Loading...",
                     sub: "Daily Holy Rosary"
-                }
+                },
+                overlayText: "Tap to Start Praying"
             },
             id: {
                 joyful: "DOA ROSARIO Peristiwa Gembira ( Hari Senin & Sabtu ).m4a",
@@ -247,72 +325,89 @@
                     sorrowful: "Peristiwa Sedih",
                     glorious: "Peristiwa Mulia",
                     luminous: "Peristiwa Terang",
-                    loading: "Memuat...",
                     sub: "Rosario Suci Harian"
-                }
+                },
+                overlayText: "Ketuk untuk Berdoa"
             }
         };
 
-        // --- LOGIC XỬ LÝ ---
-
-        // Lấy ngôn ngữ từ localStorage hoặc mặc định là tiếng Việt
         let currentLang = localStorage.getItem('rosary_lang') || 'vi';
+        const audioPlayer = document.getElementById('audio-player');
 
+        // Logic xác định mầu nhiệm theo ngày (Phụng vụ Công giáo)
         function getMysteryType() {
-            const day = new Date().getDay(); // 0 = Chủ Nhật, 1 = Thứ 2...
-            
-            // Logic Phụng vụ:
-            // T2 (1) & T7 (6): Vui
-            // T3 (2) & T6 (5): Thương
-            // T4 (3) & CN (0): Mừng
-            // T5 (4): Sáng
+            const day = new Date().getDay();
             switch(day) {
-                case 1: case 6: return 'joyful';
-                case 2: case 5: return 'sorrowful';
-                case 4:         return 'luminous';
-                case 0: case 3: return 'glorious';
+                case 1: case 6: return 'joyful';      // Thứ 2, Thứ 7
+                case 2: case 5: return 'sorrowful';   // Thứ 3, Thứ 6
+                case 4:         return 'luminous';    // Thứ 5
+                case 0: case 3: return 'glorious';    // Chúa Nhật, Thứ 4
                 default:        return 'joyful';
             }
         }
 
-        function updateUI() {
+        function updateUI(shouldPlay = true) {
             const mysteryKey = getMysteryType();
             const data = RESOURCES[currentLang];
             
-            // Cập nhật text
+            // Cập nhật Texts
             document.getElementById('mystery-name').textContent = data.labels[mysteryKey];
             document.getElementById('sub-text').textContent = data.labels.sub;
+            document.querySelector('.overlay-text').textContent = data.overlayText;
 
-            // Cập nhật ngày tháng
+            // Cập nhật Date
             const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            // Format ngày theo ngôn ngữ (vi-VN, en-US, id-ID)
             const localeMap = { vi: 'vi-VN', en: 'en-US', id: 'id-ID' };
             document.getElementById('date-display').textContent = new Date().toLocaleDateString(localeMap[currentLang], dateOptions);
 
-            // Cập nhật Audio Link
-            const audioPlayer = document.getElementById('audio-player');
+            // Cập nhật Audio Source
             const fileName = data[mysteryKey];
             const newSrc = `${R2_BASE_URL}/${fileName}`;
 
-            // Chỉ load lại nếu source thay đổi để tránh gián đoạn nếu user bấm lung tung
+            // Kiểm tra xem source có đổi không để tránh reload audio không cần thiết
             if (!audioPlayer.src.includes(fileName)) {
                 audioPlayer.src = newSrc;
-                audioPlayer.load(); 
+                audioPlayer.load();
+                if(shouldPlay) attemptAutoplay();
             }
 
-            // Cập nhật nút active
-            document.querySelectorAll('.lang-tab').forEach(btn => btn.classList.remove('active'));
+            // Cập nhật nút ngôn ngữ Active
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`btn-${currentLang}`).classList.add('active');
+        }
+
+        // --- XỬ LÝ AUTOPLAY ---
+        function attemptAutoplay() {
+            var promise = audioPlayer.play();
+
+            if (promise !== undefined) {
+                promise.then(_ => {
+                    // Autoplay thành công
+                    document.getElementById('start-overlay').style.display = 'none';
+                }).catch(error => {
+                    // Autoplay bị chặn bởi trình duyệt -> Hiện overlay mời click
+                    console.log("Autoplay blocked. Waiting for user interaction.");
+                    document.getElementById('start-overlay').style.display = 'flex';
+                });
+            }
+        }
+
+        // Hàm được gọi khi user click vào Overlay
+        function unlockAudio() {
+            document.getElementById('start-overlay').style.display = 'none';
+            audioPlayer.play();
         }
 
         function changeLanguage(lang) {
             currentLang = lang;
-            localStorage.setItem('rosary_lang', lang); // Lưu nhớ cho lần sau
-            updateUI();
+            localStorage.setItem('rosary_lang', lang);
+            updateUI(true); // Đổi ngôn ngữ thì play luôn
         }
 
-        // Chạy khi web tải xong
-        document.addEventListener('DOMContentLoaded', updateUI);
+        // Khởi chạy
+        document.addEventListener('DOMContentLoaded', () => {
+            updateUI(true); // Cố gắng autoplay ngay khi load
+        });
     </script>
 </body>
 </html>
