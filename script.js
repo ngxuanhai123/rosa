@@ -19,10 +19,10 @@ const RESOURCES = {
         }
     },
     en: {
-        joyful: "joyful-en.mp3",
-        sorrowful: "sorrowful-en.mp3",
-        glorious: "glorious-en.mp3",
-        luminous: "luminous-en.mp3",
+        joyful: "Joyful Mysteries - Vui.m4a",
+        sorrowful: "Bí ẩn buồn bã - Thương.m4a",
+        glorious: "Glorious Mysteries - Mừng.m4a",
+        luminous: "Luminous Mysteries - Sáng.m4a",
         labels: {
             joyful: "Joyful Mysteries",
             sorrowful: "Sorrowful Mysteries",
