@@ -4,22 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Daily Holy Rosary</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✝️</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
     <style>
+        /* GIỮ NGUYÊN CSS CŨ */
         :root {
-            --primary-color: #0f172a;       /* Xanh đêm thẳm */
-            --accent-gold: #fbbf24;         /* Vàng thánh */
-            --glass-bg: rgba(255, 255, 255, 0.1);
+            --primary-color: #0f172a;
+            --accent-gold: #fbbf24;
+            --card-bg: rgba(20, 30, 48, 0.85);
             --glass-border: rgba(255, 255, 255, 0.2);
-            --card-bg: rgba(20, 30, 48, 0.85); /* Nền thẻ tối màu mờ */
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: 
-                linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9)),
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9)),
                 url('https://images.unsplash.com/photo-1437603568260-1950d3ca6eab?q=80&w=1920&auto=format&fit=crop'); 
             background-size: cover;
             background-position: center;
@@ -30,7 +32,7 @@
             justify-content: center;
             align-items: center;
             color: var(--text-main);
-            overflow: hidden; /* Tránh scroll thừa */
+            overflow: hidden;
         }
 
         .main-container {
@@ -41,7 +43,6 @@
             z-index: 1;
         }
 
-        /* Hiệu ứng kính mờ cho thẻ chính */
         .glass-card {
             background: var(--card-bg);
             backdrop-filter: blur(16px);
@@ -56,7 +57,6 @@
             animation: fadeInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        /* Họa tiết trang trí mờ */
         .glass-card::before {
             content: "†";
             position: absolute;
@@ -86,16 +86,14 @@
             opacity: 0.9;
         }
 
-        /* Language Selector hiện đại */
         .lang-group {
-            display: flex;
+            display: inline-flex;
             justify-content: center;
             gap: 8px;
             margin-bottom: 25px;
             background: rgba(0,0,0,0.2);
             padding: 4px;
             border-radius: 12px;
-            display: inline-flex;
         }
 
         .lang-btn {
@@ -106,7 +104,7 @@
             color: var(--text-muted);
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 1.2rem; /* Size cờ */
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -124,11 +122,6 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
-        .lang-btn:hover:not(.active) {
-            color: var(--text-main);
-        }
-
-        /* Hình ảnh mầu nhiệm */
         .mystery-visual {
             width: 100%;
             height: 220px;
@@ -138,19 +131,19 @@
             border: 1px solid var(--glass-border);
             position: relative;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            background: #000;
         }
 
         .mystery-visual img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 5s ease;
+            transition: transform 0.5s ease;
+            opacity: 0;
+            animation: fadeInImg 1s forwards;
         }
         
-        /* Hiệu ứng zoom nhẹ ảnh */
-        .glass-card:hover .mystery-visual img {
-            transform: scale(1.05);
-        }
+        @keyframes fadeInImg { to { opacity: 1; } }
 
         .mystery-title {
             font-family: 'Cinzel', serif;
@@ -169,12 +162,11 @@
             font-weight: 300;
         }
 
-        /* Audio Player Custom */
         audio {
             width: 100%;
             height: 45px;
             border-radius: 10px;
-            filter: invert(1) hue-rotate(180deg); /* Đảo màu để hợp nền tối */
+            filter: invert(1) hue-rotate(180deg);
             opacity: 0.8;
             outline: none;
         }
@@ -187,20 +179,13 @@
             letter-spacing: 1px;
         }
 
-        /* Animation */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Overlay "Tap to Start" nếu Autoplay bị chặn */
         #start-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.7);
             backdrop-filter: blur(5px);
             z-index: 999;
-            display: none; /* Mặc định ẩn, JS sẽ hiện nếu cần */
+            display: none;
             justify-content: center;
             align-items: center;
             flex-direction: column;
@@ -232,25 +217,29 @@
             letter-spacing: 1px;
         }
 
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @keyframes pulse {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7); }
             70% { transform: scale(1.1); box-shadow: 0 0 0 20px rgba(251, 191, 36, 0); }
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
         }
-
     </style>
 </head>
 <body>
 
     <div id="start-overlay" onclick="unlockAudio()">
         <div class="play-btn-big"></div>
-        <div class="overlay-text">Chạm để bắt đầu cầu nguyện</div>
+        <div class="overlay-text" id="overlay-msg">Chạm để bắt đầu cầu nguyện</div>
     </div>
 
     <div class="main-container">
         <div class="glass-card">
             <div class="header-icon">☩</div>
-            <div class="date-text" id="date-display">LOADING DATE...</div>
+            <div class="date-text" id="date-display">LOADING...</div>
 
             <div class="lang-group">
                 <button onclick="changeLanguage('vi')" id="btn-vi" class="lang-btn active">
@@ -265,16 +254,15 @@
             </div>
 
             <div class="mystery-visual">
-                <img id="mystery-img" src="https://images.unsplash.com/photo-1518175739343-45579f1c7d2c?q=80&w=600&auto=format&fit=crop" alt="Holy Rosary">
+                <img id="mystery-img" src="" alt="Mystery">
             </div>
 
             <h1 class="mystery-title" id="mystery-name">...</h1>
-            <p class="mystery-subtitle" id="sub-text">...</p>
+            <p class="mystery-subtitle" id="sub-text">Connecting...</p>
 
             <div class="audio-container">
-                <audio id="audio-player" controls controlsList="nodownload" autoplay playsinline>
-                    <source src="" type="audio/mp4">
-                    Your browser does not support the audio element.
+                <audio id="audio-player" controls controlsList="nodownload" playsinline>
+                    <source src="" id="audio-source"> Your browser does not support audio.
                 </audio>
             </div>
 
@@ -282,131 +270,165 @@
         </div>
     </div>
 
-    <script>
-        // --- CONFIGURATION ---
-        const R2_BASE_URL = "https://pub-68349844dd6d4ec5a3103816b64fec7a.r2.dev"; 
+   <script>
+        // ============================================================
+        // 1. CẤU HÌNH LINK AUDIO (BẠN DÁN LINK CỦA MÌNH VÀO ĐÂY)
+        // ============================================================
+        
+        // Link mẫu bạn đã gửi cho Mùa Mừng (Glorious)
+        const LINK_MUNG_VN = "";
+        const LINK_VUI_VN   = ""; // Ví dụ: "https://.../Vui.m4a"
+        const LINK_THUONG_VN = ""; // Ví dụ: "https://.../Thuong.m4a"
+        const LINK_SANG_VN  = ""; // Ví dụ: "https://.../Sang.m4a"
 
-        const RESOURCES = {
+        // Link tiếng Anh (nếu có)
+        const LINK_JOYFUL_EN    = "https://pub-68349844dd6d4ec5a3103816b64fec7a.r2.dev/Joyful%20Mysteries%20-%20Vui.m4a";
+        const LINK_SORROWFUL_EN = "https://pub-68349844dd6d4ec5a3103816b64fec7a.r2.dev/Sorrowful%20Mysteries%20-%20Th%C6%B0%C6%A1ng.m4a";
+        const LINK_GLORIOUS_EN  = "https://pub-68349844dd6d4ec5a3103816b64fec7a.r2.dev/Glorious%20Mysteries%20-%20%20M%E1%BB%ABng.m4a";
+        const LINK_LUMINOUS_EN  = "https://pub-68349844dd6d4ec5a3103816b64fec7a.r2.dev/Luminous%20Mysteries%20-%20S%C3%A1ng.m4a";
+
+        // Link tiếng Indo (nếu có)
+        const LINK_JOYFUL_ID    = "https://pub-68349844dd6d4ec5a3103816b64fec7a.r2.dev/DOA%20ROSARIO%20Peristiwa%20Gembira%20(%20Hari%20Senin%20%26%20Sabtu%20).m4a";
+        const LINK_SORROWFUL_ID = "https://pub-68349844dd6d4ec5a3103816b64fec7a.r2.dev/DOA%20ROSARIO%20Peristiwa%20Sedih%20(%20Hari%20Selasa%20%26%20Jumat%20).m4a";
+        const LINK_GLORIOUS_ID  = "https://pub-68349844dd6d4ec5a3103816b64fec7a.r2.dev/DOA%20ROSARIO%20Peristiwa%20Mulia%20(%20Hari%20Rabu%20%26%20Minggu%20).m4a";
+        const LINK_LUMINOUS_ID  = "https://pub-68349844dd6d4ec5a3103816b64fec7a.r2.dev/DOA%20ROSARIO%20Peristiwa%20Terang%20(%20Hari%20Kamis%20).m4a";
+
+
+        // ============================================================
+        // 2. DỮ LIỆU CỐ ĐỊNH (KHÔNG CẦN CHỈNH SỬA)
+        // ============================================================
+        
+        const IMAGES = {
+            joyful: "https://images.unsplash.com/photo-1544131807-688755b6a715?q=80&w=600&auto=format&fit=crop",
+            sorrowful: "https://images.unsplash.com/photo-1563220815-515437887515?q=80&w=600&auto=format&fit=crop",
+            glorious: "https://images.unsplash.com/photo-1437603568260-1950d3ca6eab?q=80&w=600&auto=format&fit=crop",
+            luminous: "https://images.unsplash.com/photo-1507646870344-325b3c224209?q=80&w=600&auto=format&fit=crop"
+        };
+
+        const TEXT_DATA = {
             vi: {
-                joyful: "vui-vi.mp3",
-                sorrowful: "thuong-vi.mp3",
-                glorious: "mung-vi.mp3",
-                luminous: "sang-vi.mp3",
-                labels: {
-                    joyful: "Năm Sự Vui",
-                    sorrowful: "Năm Sự Thương",
-                    glorious: "Năm Sự Mừng",
-                    luminous: "Năm Sự Sáng",
-                    sub: "Kinh Mân Côi Trọn Bộ"
-                },
-                overlayText: "Chạm để bắt đầu cầu nguyện"
+                joyful: { name: "Năm Sự Vui", sub: "Thứ Hai & Thứ Bảy", url: LINK_VUI_VN },
+                sorrowful: { name: "Năm Sự Thương", sub: "Thứ Ba & Thứ Sáu", url: LINK_THUONG_VN },
+                glorious: { name: "Năm Sự Mừng", sub: "Thứ Tư & Chúa Nhật", url: LINK_MUNG_VN },
+                luminous: { name: "Năm Sự Sáng", sub: "Thứ Năm", url: LINK_SANG_VN },
+                overlay: "Chạm để bắt đầu cầu nguyện"
             },
             en: {
-                joyful: "Joyful Mysteries - Vui.m4a",
-                sorrowful: "Sorrowful Mysteries - Thương.m4a",
-                glorious: "Glorious Mysteries - Mừng.m4a",
-                luminous: "Luminous Mysteries - Sáng.m4a",
-                labels: {
-                    joyful: "Joyful Mysteries",
-                    sorrowful: "Sorrowful Mysteries",
-                    glorious: "Glorious Mysteries",
-                    luminous: "Luminous Mysteries",
-                    sub: "Daily Holy Rosary"
-                },
-                overlayText: "Tap to Start Praying"
+                joyful: { name: "Joyful Mysteries", sub: "Mon & Sat", url: LINK_JOYFUL_EN },
+                sorrowful: { name: "Sorrowful Mysteries", sub: "Tue & Fri", url: LINK_SORROWFUL_EN },
+                glorious: { name: "Glorious Mysteries", sub: "Wed & Sun", url: LINK_GLORIOUS_EN },
+                luminous: { name: "Luminous Mysteries", sub: "Thursday", url: LINK_LUMINOUS_EN },
+                overlay: "Tap to start praying"
             },
             id: {
-                joyful: "DOA ROSARIO Peristiwa Gembira ( Hari Senin & Sabtu ).m4a",
-                sorrowful: "DOA ROSARIO Peristiwa Sedih ( Hari Selasa & Jumat ).m4a",
-                glorious: "DOA ROSARIO Peristiwa Mulia ( Hari Rabu & Minggu ).m4a",
-                luminous: "DOA ROSARIO Peristiwa Terang ( Hari Kamis ).m4a",
-                labels: {
-                    joyful: "Peristiwa Gembira",
-                    sorrowful: "Peristiwa Sedih",
-                    glorious: "Peristiwa Mulia",
-                    luminous: "Peristiwa Terang",
-                    sub: "Rosario Suci Harian"
-                },
-                overlayText: "Ketuk untuk Berdoa"
+                joyful: { name: "Peristiwa Gembira", sub: "Senin & Sabtu", url: LINK_JOYFUL_ID },
+                sorrowful: { name: "Peristiwa Sedih", sub: "Selasa & Jumat", url: LINK_SORROWFUL_ID },
+                glorious: { name: "Peristiwa Mulia", sub: "Rabu & Minggu", url: LINK_GLORIOUS_ID },
+                luminous: { name: "Peristiwa Terang", sub: "Kamis", url: LINK_LUMINOUS_ID },
+                overlay: "Ketuk untuk berdoa"
             }
         };
+
+        // ============================================================
+        // 3. LOGIC XỬ LÝ
+        // ============================================================
 
         let currentLang = localStorage.getItem('rosary_lang') || 'vi';
         const audioPlayer = document.getElementById('audio-player');
 
-        // Logic xác định mầu nhiệm theo ngày (Phụng vụ Công giáo)
-        function getMysteryType() {
+        // Hàm xác định Mùa dựa trên thứ trong tuần
+        function getMysteryCode() {
+            // 0 = Sunday, 1 = Monday, ... 6 = Saturday
             const day = new Date().getDay();
-            switch(day) {
-                case 1: case 6: return 'joyful';      // Thứ 2, Thứ 7
-                case 2: case 5: return 'sorrowful';   // Thứ 3, Thứ 6
-                case 4:         return 'luminous';    // Thứ 5
-                case 0: case 3: return 'glorious';    // Chúa Nhật, Thứ 4
-                default:        return 'joyful';
-            }
-        }
-
-        function updateUI(shouldPlay = true) {
-            const mysteryKey = getMysteryType();
-            const data = RESOURCES[currentLang];
             
-            // Cập nhật Texts
-            document.getElementById('mystery-name').textContent = data.labels[mysteryKey];
-            document.getElementById('sub-text').textContent = data.labels.sub;
-            document.querySelector('.overlay-text').textContent = data.overlayText;
-
-            // Cập nhật Date
-            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            const localeMap = { vi: 'vi-VN', en: 'en-US', id: 'id-ID' };
-            document.getElementById('date-display').textContent = new Date().toLocaleDateString(localeMap[currentLang], dateOptions);
-
-            // Cập nhật Audio Source
-            const fileName = data[mysteryKey];
-            const newSrc = `${R2_BASE_URL}/${fileName}`;
-
-            // Kiểm tra xem source có đổi không để tránh reload audio không cần thiết
-            if (!audioPlayer.src.includes(fileName)) {
-                audioPlayer.src = newSrc;
-                audioPlayer.load();
-                if(shouldPlay) attemptAutoplay();
+            switch(day) {
+                case 1: return 'joyful';    // Thứ 2
+                case 6: return 'joyful';    // Thứ 7
+                case 2: return 'sorrowful'; // Thứ 3
+                case 5: return 'sorrowful'; // Thứ 6
+                case 4: return 'luminous';  // Thứ 5
+                case 0: return 'glorious';  // CN
+                case 3: return 'glorious';  // Thứ 4
+                default: return 'joyful';
             }
-
-            // Cập nhật nút ngôn ngữ Active
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`btn-${currentLang}`).classList.add('active');
         }
 
-        // --- XỬ LÝ AUTOPLAY ---
+        function updateUI(shouldPlay = false) {
+            document.getElementById('mystery-name').style.opacity = '0.5';
+
+            try {
+                // 1. Xác định dữ liệu cần lấy
+                const mysteryCode = getMysteryCode();
+                const data = TEXT_DATA[currentLang][mysteryCode];
+                const overlayText = TEXT_DATA[currentLang].overlay;
+
+                // 2. Cập nhật Text
+                document.getElementById('mystery-name').textContent = data.name;
+                document.getElementById('sub-text').textContent = data.sub;
+                document.getElementById('mystery-name').style.opacity = '1';
+                document.getElementById('overlay-msg').textContent = overlayText;
+
+                // 3. Cập nhật Ảnh
+                document.getElementById('mystery-img').src = IMAGES[mysteryCode];
+
+                // 4. Cập nhật Ngày
+                const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const localeMap = { vi: 'vi-VN', en: 'en-US', id: 'id-ID' };
+                document.getElementById('date-display').textContent = new Date().toLocaleDateString(localeMap[currentLang], dateOptions);
+
+                // 5. Cập nhật Audio
+                // Nếu chưa có link (chuỗi rỗng), báo lỗi nhẹ
+                if (!data.url) {
+                    console.warn("Chưa có link audio cho mục này!");
+                }
+
+                if (audioPlayer.src !== data.url && data.url) {
+                    console.log("Loading Audio:", data.url);
+                    audioPlayer.src = data.url;
+                    audioPlayer.load();
+                    if (shouldPlay) attemptAutoplay();
+                } else if (shouldPlay && audioPlayer.paused && data.url) {
+                    attemptAutoplay();
+                }
+
+                // 6. Active Button
+                document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+                document.getElementById(`btn-${currentLang}`).classList.add('active');
+
+            } catch (error) {
+                console.error("Lỗi:", error);
+                document.getElementById('mystery-name').textContent = "Error Loading Data";
+            }
+        }
+
         function attemptAutoplay() {
             var promise = audioPlayer.play();
-
             if (promise !== undefined) {
                 promise.then(_ => {
-                    // Autoplay thành công
                     document.getElementById('start-overlay').style.display = 'none';
                 }).catch(error => {
-                    // Autoplay bị chặn bởi trình duyệt -> Hiện overlay mời click
-                    console.log("Autoplay blocked. Waiting for user interaction.");
+                    console.log("Autoplay prevented. Waiting for user interaction.");
                     document.getElementById('start-overlay').style.display = 'flex';
                 });
             }
         }
 
-        // Hàm được gọi khi user click vào Overlay
         function unlockAudio() {
             document.getElementById('start-overlay').style.display = 'none';
-            audioPlayer.play();
+            const audioSource = audioPlayer.src;
+            if(audioSource && audioSource !== window.location.href) {
+                 audioPlayer.play();
+            }
         }
 
         function changeLanguage(lang) {
             currentLang = lang;
             localStorage.setItem('rosary_lang', lang);
-            updateUI(true); // Đổi ngôn ngữ thì play luôn
+            updateUI(true);
         }
 
-        // Khởi chạy
         document.addEventListener('DOMContentLoaded', () => {
-            updateUI(true); // Cố gắng autoplay ngay khi load
+            updateUI(false);
         });
     </script>
 </body>
